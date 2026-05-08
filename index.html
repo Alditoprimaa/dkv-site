@@ -190,9 +190,9 @@
                 <li><a href="#tentang" class="link-menu">Tentang</a></li>
                 <li><a href="#keahlian" class="link-menu">Keahlian</a></li>
                 <li><a href="#portofolio" class="link-menu">Portofolio</a></li>
-                <li><a href="data-siswa.html" class="link-menu">Data Siswa</a></li>
+                <li><a href="/data" class="link-menu">Data Siswa</a></li>
                 <li><a href="#kontak" class="link-menu">Kontak</a></li>
-                <li><a href="#" id="tombol-tema">ðŸŒ™ Gelap</a></li>
+                <li><a href="#" id="tombol-tema">🌙 Gelap</a></li>
             </ul>
         </nav>
     </header>
@@ -219,19 +219,19 @@
         <h2 class="section-title">Keahlian Kami</h2>
         <div class="keahlian-grid">
             <div class="keahlian-card">
-                <h3>ðŸŽ¨ Desain Grafis</h3>
+                <h3>Desain Grafis</h3>
                 <p>Eksplorasi tipografi, layout, dan branding untuk komunikasi visual yang efektif.</p>
             </div>
             <div class="keahlian-card">
-                <h3>ðŸ“¸ Fotografi & Videografi</h3>
+                <h3>Fotografi & Videografi</h3>
                 <p>Menguasai segitiga eksposur, komposisi, dan pergerakan kamera untuk menangkap momen terbaik.</p>
             </div>
             <div class="keahlian-card">
-                <h3>ðŸ’» UI/UX & Web Design</h3>
+                <h3>UI/UX & Web Design</h3>
                 <p>Membangun antarmuka interaktif yang indah dan fungsional berbasis logika pemrograman dasar.</p>
             </div>
             <div class="keahlian-card">
-                <h3>âœï¸ Ilustrasi Digital</h3>
+                <h3>Ilustrasi Digital</h3>
                 <p>Menerjemahkan ide dan naskah menjadi karya visual dari sketsa hingga digital painting.</p>
             </div>
         </div>
@@ -263,7 +263,7 @@
 
         if (localStorage.getItem('tema') === 'dark') {
             body.classList.add('dark-mode');
-            tombolTema.innerText = 'â˜€ï¸ Terang';
+            tombolTema.innerText = '🔆 Terang';
         }
 
         tombolTema.addEventListener('click', function(e) {
@@ -271,10 +271,10 @@
             body.classList.toggle('dark-mode');
             
             if (body.classList.contains('dark-mode')) {
-                tombolTema.innerText = 'â˜€ï¸ Terang';
+                tombolTema.innerText = '🔆 Terang';
                 localStorage.setItem('tema', 'dark'); 
             } else {
-                tombolTema.innerText = 'ðŸŒ™ Gelap';
+                tombolTema.innerText = '🌙 Gelap';
                 localStorage.setItem('tema', 'light');
             }
         });
