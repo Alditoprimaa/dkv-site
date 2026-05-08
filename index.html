@@ -1,512 +1,297 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Blog Kelas X DKV — SMK IPIEMS</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
-  <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DKV IPIEMS - Desain Komunikasi Visual</title>
+    <style>
+        :root {
+            --bg-color: #f8f9fa;
+            --text-color: #333;
+            --card-bg: #fff;
+            --accent: #ffaa00;
+            --header-bg: #1a1a1a;
+        }
 
-    :root {
-      --cream: #f5f0e8;
-      --ink: #1a1410;
-      --accent: #c0392b;
-      --gold: #b8860b;
-      --muted: #7a6f63;
-      --card-bg: #ffffff;
-      --divider: #d4c9b8;
-    }
+        .dark-mode {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --card-bg: #1e1e1e;
+            --header-bg: #000000;
+        }
 
-    html { scroll-behavior: smooth; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            transition: background-color 0.4s ease, color 0.4s ease;
+            overflow-x: hidden; 
+        }
 
-    body {
-      background: var(--cream);
-      color: var(--ink);
-      font-family: 'DM Sans', sans-serif;
-      font-weight: 300;
-      overflow-x: hidden;
-    }
+        header {
+            background-color: var(--header-bg);
+            color: #fff;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: background-color 0.4s ease;
+        }
 
-    /* ── HERO HEADER ── */
-    header {
-      background: var(--ink);
-      padding: 60px 40px 50px;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-    header::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: repeating-linear-gradient(
-        -45deg,
-        transparent,
-        transparent 10px,
-        rgba(255,255,255,.03) 10px,
-        rgba(255,255,255,.03) 20px
-      );
-    }
-    header .kode {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 11px;
-      letter-spacing: 6px;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 12px;
-      opacity: .9;
-    }
-    header h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2.4rem, 6vw, 4.5rem);
-      color: var(--cream);
-      line-height: 1.1;
-    }
-    header h1 span { color: var(--accent); font-style: italic; }
-    header p {
-      margin-top: 14px;
-      color: rgba(245,240,232,.55);
-      font-size: 14px;
-      letter-spacing: 1px;
-    }
+        .logo {
+            display: flex;         
+            align-items: center;    
+            gap: 15px;            
+            text-decoration: none;
+            color: var(--accent);       
+            font-weight: bold;
+            z-index: 101;
+        }
 
-    /* ── NAV ── */
-    nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: var(--ink);
-      border-bottom: 1px solid rgba(255,255,255,.08);
-      display: flex;
-      justify-content: center;
-      gap: 0;
-    }
-    nav a {
-      color: rgba(245,240,232,.6);
-      text-decoration: none;
-      font-size: 12px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      padding: 16px 36px;
-      transition: color .25s, background .25s;
-    }
-    nav a:hover, nav a.active {
-      color: var(--cream);
-      background: rgba(255,255,255,.07);
-    }
-    nav .sep { width: 1px; background: rgba(255,255,255,.1); margin: 10px 0; }
+        .logo-img { height: 50px; width: auto; display: block; }
 
-    /* ── SECTION WRAPPER ── */
-    .section {
-      padding: 80px 0;
-    }
-    .section-label {
-      text-align: center;
-      margin-bottom: 60px;
-    }
-    .section-label .tag {
-      display: inline-block;
-      font-size: 10px;
-      letter-spacing: 5px;
-      text-transform: uppercase;
-      color: var(--accent);
-      border: 1px solid var(--accent);
-      padding: 4px 14px;
-      margin-bottom: 16px;
-    }
-    .section-label h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2rem, 4vw, 3rem);
-      color: var(--ink);
-      line-height: 1.15;
-    }
-    .section-label p {
-      margin-top: 10px;
-      color: var(--muted);
-      font-size: 14px;
-    }
+        .menu-toggle {
+            display: none; 
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 5px;
+            z-index: 101; 
+            margin-left: auto; 
+        }
+        
+        .menu-toggle span {
+            width: 6px;
+            height: 6px;
+            background-color: var(--accent);
+            border-radius: 50%;
+            transition: 0.3s;
+        }
 
-    /* ── DIVIDER ── */
-    .class-divider {
-      display: flex;
-      align-items: center;
-      gap: 24px;
-      max-width: 900px;
-      margin: 20px auto 80px;
-      padding: 0 40px;
-    }
-    .class-divider::before,
-    .class-divider::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--divider);
-    }
-    .class-divider span {
-      font-size: 10px;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      color: var(--muted);
-      white-space: nowrap;
-    }
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
 
-    /* ── STUDENT CARD ── */
-    .student-list {
-      max-width: 920px;
-      margin: 0 auto;
-      padding: 0 40px;
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-    }
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
 
-    .student-card {
-      display: flex;
-      align-items: center;
-      gap: 0;
-      padding: 44px 0;
-      border-bottom: 1px solid var(--divider);
-      opacity: 0;
-      transform: translateY(28px);
-      transition: opacity .55s ease, transform .55s ease;
-    }
-    .student-card.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .student-card:last-child { border-bottom: none; }
+        nav ul li a:hover { color: var(--accent); }
 
-    /* LEFT PHOTO */
-    .student-card.left { flex-direction: row; }
-    /* RIGHT PHOTO */
-    .student-card.right { flex-direction: row-reverse; }
+        #tombol-tema {
+            background-color: #333; padding: 5px 12px; border-radius: 20px; font-size: 0.9rem;
+        }
+        #tombol-tema:hover { background-color: #555; color: #fff; }
 
-    /* Photo wrapper */
-    .photo-wrap {
-      flex-shrink: 0;
-      width: 200px;
-      height: 240px;
-      position: relative;
-    }
-    .photo-wrap::before {
-      content: '';
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      border: 2px solid var(--accent);
-      top: 8px;
-      left: 8px;
-      z-index: 0;
-    }
-    .student-card.right .photo-wrap::before {
-      left: -8px;
-    }
-    .photo-wrap img {
-      position: relative;
-      z-index: 1;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      filter: grayscale(20%);
-      transition: filter .3s;
-    }
-    .photo-wrap img:hover { filter: grayscale(0%); }
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('Genshin_Impact_Duolingo.jpg') center/cover;
+            height: 80vh;
+            display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: #fff; padding: 0 20px;
+        }
 
-    /* No-photo placeholder */
-    .photo-placeholder {
-      position: relative;
-      z-index: 1;
-      width: 100%;
-      height: 100%;
-      background: #e4ddd3;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .photo-placeholder svg {
-      width: 90px;
-      height: 90px;
-      opacity: 0.3;
-      color: var(--muted);
-    }
+        .hero h1 { font-size: 3rem; margin-bottom: 1rem; letter-spacing: 2px; }
+        .hero p { font-size: 1.2rem; max-width: 600px; margin-bottom: 2rem; }
+        
+        .btn {
+            padding: 10px 25px; background-color: var(--accent); color: #1a1a1a; text-decoration: none; font-weight: bold; border-radius: 5px; transition: 0.3s;
+        }
+        .btn:hover { background-color: #e69900; transform: scale(1.05); }
 
-    /* Info */
-    .student-info {
-      flex: 1;
-      padding: 0 40px;
-    }
-    .student-card.left .student-info { text-align: left; }
-    .student-card.right .student-info { text-align: right; }
+        section { padding: 5rem 5%; }
+        .section-title { text-align: center; font-size: 2rem; margin-bottom: 3rem; color: var(--text-color); position: relative; }
+        .section-title::after { content: ''; display: block; width: 50px; height: 3px; background: var(--accent); margin: 10px auto 0; }
 
-    .student-info .jabatan {
-      font-size: 10px;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 10px;
-    }
-    .student-info .nama a {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.5rem, 2.5vw, 2rem);
-      color: var(--ink);
-      text-decoration: none;
-      border-bottom: 2px solid transparent;
-      transition: border-color .25s, color .25s;
-      display: inline-block;
-      line-height: 1.2;
-    }
-    .student-info .nama a:hover {
-      color: var(--accent);
-      border-bottom-color: var(--accent);
-    }
-    .student-info .deskripsi {
-      margin-top: 14px;
-      font-size: 14px;
-      line-height: 1.8;
-      color: var(--muted);
-      max-width: 380px;
-    }
-    .student-card.right .student-info .deskripsi { margin-left: auto; }
+        .about-content { display: flex; gap: 2rem; align-items: center; }
+        .about-text { flex: 1; }
 
-    /* ── FOOTER ── */
-    footer {
-      background: var(--ink);
-      color: rgba(245,240,232,.4);
-      text-align: center;
-      padding: 40px;
-      font-size: 12px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-    }
-    footer span { color: var(--accent); }
+        .keahlian-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; }
+        .keahlian-card {
+            background-color: var(--card-bg); padding: 2rem; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); text-align: center; transition: 0.3s;
+        }
+        .keahlian-card h3 { margin-bottom: 1rem; color: var(--accent); }
+        .keahlian-card:hover { transform: translateY(-10px); box-shadow: 0 10px 20px rgba(255, 170, 0, 0.2); }
 
-    /* ── RESPONSIVE ── */
-    @media(max-width: 640px) {
-      .student-card,
-      .student-card.left,
-      .student-card.right {
-        flex-direction: column !important;
-        align-items: flex-start;
-        gap: 24px;
-      }
-      .photo-wrap { width: 160px; height: 190px; }
-      .student-info { padding: 0; }
-      .student-card.right .student-info { text-align: left; }
-      .student-card.right .student-info .deskripsi { margin-left: 0; }
-      .student-list { padding: 0 24px; }
-    }
-  </style>
+        #portofolio { background-color: var(--bg-color); }
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; }
+        .gallery-item {
+            background-color: var(--card-bg); height: 250px; border-radius: 8px; display: flex; justify-content: center; align-items: center; color: #666; font-weight: bold; transition: 0.3s;
+            background-image: url('https://via.placeholder.com/400x300?text=Karya+Siswa'); background-size: cover; background-position: center;
+        }
+        .gallery-item:hover { transform: translateY(-10px); box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
+
+        footer { background-color: var(--header-bg); color: #ccc; text-align: center; padding: 3rem 5%; transition: 0.4s; }
+        footer h3 { color: var(--accent); margin-bottom: 1rem; }
+        footer p { margin-top: 0.5rem; font-size: 0.9rem; }
+
+        @media (max-width: 850px) {
+            
+            .menu-toggle {
+                display: flex; 
+            }
+
+            nav ul {
+                position: fixed; 
+                top: 0;
+                right: -100%; 
+                width: 250px;
+                height: 100vh; 
+                background-color: var(--header-bg);
+                flex-direction: column; 
+                justify-content: flex-start;
+                padding-top: 6rem; 
+                gap: 2rem;
+                box-shadow: -5px 0 15px rgba(0,0,0,0.5);
+                transition: right 0.4s ease; 
+            }
+
+            nav ul.muncul {
+                right: 0; 
+            }
+
+            .about-content { flex-direction: column; }
+            .hero h1 { font-size: 2.2rem; }
+        }
+    </style>
 </head>
 <body>
 
-<!-- ── HEADER ── -->
-<header>
-  <div class="kode">Desain Komunikasi Visual · Angkatan 2025</div>
-  <h1>Blog Kelas<br/><span>X DKV</span></h1>
-  <p>Mengenal para siswa berbakat kelas X Desain Komunikasi Visual</p>
-</header>
+    <header>
+        <a href="#" class="logo">
+            <img src="aset/ipiems.png" alt="Logo SMK IPIEMS" class="logo-img">
+            DKV IPIEMS
+        </a>
+        
+        <div class="menu-toggle" id="ikon-menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
 
-<!-- ── NAV ── -->
-<nav>
-  <a href="#dkv1" class="active">X DKV 1</a>
-  <div class="sep"></div>
-  <a href="#dkv2">X DKV 2</a>
-</nav>
+        <nav>
+            <ul id="daftar-menu">
+                <li><a href="#beranda" class="link-menu">Beranda</a></li>
+                <li><a href="#tentang" class="link-menu">Tentang</a></li>
+                <li><a href="#keahlian" class="link-menu">Keahlian</a></li>
+                <li><a href="#portofolio" class="link-menu">Portofolio</a></li>
+                <li><a href="data-siswa.html" class="link-menu">Data Siswa</a></li>
+                <li><a href="#kontak" class="link-menu">Kontak</a></li>
+                <li><a href="#" id="tombol-tema">ðŸŒ™ Gelap</a></li>
+            </ul>
+        </nav>
+    </header>
 
-<!-- ══════════════════════════════
-     SECTION X DKV 1
-══════════════════════════════ -->
-<section class="section" id="dkv1">
-  <div class="section-label">
-    <div class="tag">Kelas</div>
-    <h2>X DKV 1</h2>
-    <p>Daftar siswa kelas X Desain Komunikasi Visual 1</p>
-  </div>
+    <section class="hero" id="beranda">
+        <h1>Desain Komunikasi Visual</h1>
+        <p>Program Studi Desain Komunikasi Visual (DKV) IPIEMS. Tempat di mana ide-ide kreatif dibungkam oleh para guru guru jahat kami</p>
+        <a href="#tentang" class="btn">Pelajari Lebih Lanjut</a>
+    </section>
 
-  <div class="student-list" id="list-dkv1">
+    <section id="tentang">
+        <h2 class="section-title">Tentang DKV IPIEMS</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <h3>Mencetak Desainer Profesional</h3>
+                <p><br>Di DKV IPIEMS, kami berfokus pada pengembangan keterampilan teknis dan kepekaan estetika. Kurikulum kami dirancang untuk menjawab tantangan industri kreatif modern, mulai dari desain grafis, ilustrasi, tipografi, hingga multimedia interaktif dan videografi.</p>
+                <br>
+                <p>Kami memiliki fasilitas laboratorium komputer desain terkini, studio fotografi, dan dosen-dosen praktisi yang berpengalaman di bidangnya.</p>
+            </div>
+        </div>
+    </section>
 
-    <!-- Contoh siswa — ganti data di sini sesuai data asli -->
-    <!-- FORMAT: data-photo="URL_FOTO" atau kosongkan untuk placeholder -->
+    <section id="keahlian" class="animasi-masuk">
+        <h2 class="section-title">Keahlian Kami</h2>
+        <div class="keahlian-grid">
+            <div class="keahlian-card">
+                <h3>ðŸŽ¨ Desain Grafis</h3>
+                <p>Eksplorasi tipografi, layout, dan branding untuk komunikasi visual yang efektif.</p>
+            </div>
+            <div class="keahlian-card">
+                <h3>ðŸ“¸ Fotografi & Videografi</h3>
+                <p>Menguasai segitiga eksposur, komposisi, dan pergerakan kamera untuk menangkap momen terbaik.</p>
+            </div>
+            <div class="keahlian-card">
+                <h3>ðŸ’» UI/UX & Web Design</h3>
+                <p>Membangun antarmuka interaktif yang indah dan fungsional berbasis logika pemrograman dasar.</p>
+            </div>
+            <div class="keahlian-card">
+                <h3>âœï¸ Ilustrasi Digital</h3>
+                <p>Menerjemahkan ide dan naskah menjadi karya visual dari sketsa hingga digital painting.</p>
+            </div>
+        </div>
+    </section>
 
-    <div class="student-card left" data-photo="">
-      <div class="photo-wrap">
-        <div class="photo-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="#7a6f63" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><circle cx="12" cy="17" r=".5" fill="#7a6f63"/></svg></div>
-      </div>
-      <div class="student-info">
-        <div class="jabatan">Ketua Kelas</div>
-        <div class="nama"><a href="https://instagram.com" target="_blank">Andi Pratama</a></div>
-        <div class="deskripsi">Siswa berprestasi yang memiliki passion di bidang ilustrasi digital dan branding. Aktif dalam berbagai kegiatan seni sekolah.</div>
-      </div>
-    </div>
+    <section id="portofolio">
+        <h2 class="section-title">Galeri Karya</h2>
+        <div class="gallery-grid">
+            <div class="gallery-item"></div>
+            <div class="gallery-item"></div>
+            <div class="gallery-item"></div>
+            <div class="gallery-item"></div>
+            <div class="gallery-item"></div>
+            <div class="gallery-item"></div>
+        </div>
+    </section>
 
-    <div class="student-card right" data-photo="">
-      <div class="photo-wrap">
-        <div class="photo-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="#7a6f63" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><circle cx="12" cy="17" r=".5" fill="#7a6f63"/></svg></div>
-      </div>
-      <div class="student-info">
-        <div class="jabatan">Wakil Ketua</div>
-        <div class="nama"><a href="https://instagram.com" target="_blank">Siti Rahayu</a></div>
-        <div class="deskripsi">Gemar menggabungkan fotografi dengan desain grafis. Bercita-cita menjadi art director di industri kreatif.</div>
-      </div>
-    </div>
+    <footer id="kontak">
+        <h3>Hubungi Kami</h3>
+        <p>Jl. Raya Menur No. 125, Manyar Sabrangan, Kecamatan Mulyorejo, Kota Surabaya, Jawa Timur</p>
+        <p>Email: info@dkv-ipiems.ac.id | Telp: (031) 5949790</p>
+        <p>+62 877-8285-7779</p>
+        <p style="margin-top: 2rem;">&copy; 2026 DKV IPIEMS. All rights reserved.</p>
+    </footer>
 
-    <div class="student-card left" data-photo="">
-      <div class="photo-wrap">
-        <div class="photo-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="#7a6f63" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><circle cx="12" cy="17" r=".5" fill="#7a6f63"/></svg></div>
-      </div>
-      <div class="student-info">
-        <div class="jabatan">Sekretaris</div>
-        <div class="nama"><a href="https://instagram.com" target="_blank">Budi Santoso</a></div>
-        <div class="deskripsi">Spesialis tipografi dan layout. Menyukai tantangan mendesain poster dan media cetak yang eye-catching.</div>
-      </div>
-    </div>
+    <script>
+        const tombolTema = document.getElementById('tombol-tema');
+        const body = document.body;
 
-    <div class="student-card right" data-photo="">
-      <div class="photo-wrap">
-        <div class="photo-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="#7a6f63" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><circle cx="12" cy="17" r=".5" fill="#7a6f63"/></svg></div>
-      </div>
-      <div class="student-info">
-        <div class="jabatan">Bendahara</div>
-        <div class="nama"><a href="https://instagram.com" target="_blank">Dewi Lestari</a></div>
-        <div class="deskripsi">Tertarik pada desain UI/UX dan motion graphic. Selalu menghadirkan warna-warna cerah dalam setiap karyanya.</div>
-      </div>
-    </div>
+        if (localStorage.getItem('tema') === 'dark') {
+            body.classList.add('dark-mode');
+            tombolTema.innerText = 'â˜€ï¸ Terang';
+        }
 
-    <div class="student-card left" data-photo="">
-      <div class="photo-wrap">
-        <div class="photo-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="#7a6f63" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><circle cx="12" cy="17" r=".5" fill="#7a6f63"/></svg></div>
-      </div>
-      <div class="student-info">
-        <div class="jabatan">Anggota</div>
-        <div class="nama"><a href="https://instagram.com" target="_blank">Rizky Firmansyah</a></div>
-        <div class="deskripsi">Penggemar seni mural dan street art. Membawa energi positif dan kreativitas tak terbatas ke dalam kelas.</div>
-      </div>
-    </div>
+        tombolTema.addEventListener('click', function(e) {
+            e.preventDefault(); 
+            body.classList.toggle('dark-mode');
+            
+            if (body.classList.contains('dark-mode')) {
+                tombolTema.innerText = 'â˜€ï¸ Terang';
+                localStorage.setItem('tema', 'dark'); 
+            } else {
+                tombolTema.innerText = 'ðŸŒ™ Gelap';
+                localStorage.setItem('tema', 'light');
+            }
+        });
 
-  </div>
-</section>
+        const ikonMenu = document.getElementById('ikon-menu');
+        const daftarMenu = document.getElementById('daftar-menu');
+        const linkMenus = document.querySelectorAll('.link-menu');
 
-<!-- ── DIVIDER ── -->
-<div class="class-divider">
-  <span>Pemisah Kelas</span>
-</div>
+        ikonMenu.addEventListener('click', function() {
+            daftarMenu.classList.toggle('muncul');
+        });
 
-<!-- ══════════════════════════════
-     SECTION X DKV 2
-══════════════════════════════ -->
-<section class="section" id="dkv2">
-  <div class="section-label">
-    <div class="tag">Kelas</div>
-    <h2>X DKV 2</h2>
-    <p>Daftar siswa kelas X Desain Komunikasi Visual 2</p>
-  </div>
-
-  <div class="student-list" id="list-dkv2">
-
-    <div class="student-card left" data-photo="">
-      <div class="photo-wrap">
-        <div class="photo-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="#7a6f63" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><circle cx="12" cy="17" r=".5" fill="#7a6f63"/></svg></div>
-      </div>
-      <div class="student-info">
-        <div class="jabatan">Ketua Kelas</div>
-        <div class="nama"><a href="https://instagram.com" target="_blank">Fajar Nugroho</a></div>
-        <div class="deskripsi">Visioner muda yang suka eksplorasi desain 3D dan augmented reality. Selalu punya ide segar untuk setiap proyek.</div>
-      </div>
-    </div>
-
-    <div class="student-card right" data-photo="">
-      <div class="photo-wrap">
-        <div class="photo-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="#7a6f63" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><circle cx="12" cy="17" r=".5" fill="#7a6f63"/></svg></div>
-      </div>
-      <div class="student-info">
-        <div class="jabatan">Wakil Ketua</div>
-        <div class="nama"><a href="https://instagram.com" target="_blank">Nadia Putri</a></div>
-        <div class="deskripsi">Menguasai ilustrasi karakter dan komik digital. Impiannya adalah menjadi illustrator buku anak-anak ternama.</div>
-      </div>
-    </div>
-
-    <div class="student-card left" data-photo="">
-      <div class="photo-wrap">
-        <div class="photo-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="#7a6f63" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><circle cx="12" cy="17" r=".5" fill="#7a6f63"/></svg></div>
-      </div>
-      <div class="student-info">
-        <div class="jabatan">Sekretaris</div>
-        <div class="nama"><a href="https://instagram.com" target="_blank">Hendra Wijaya</a></div>
-        <div class="deskripsi">Ahli dalam fotografi produk dan editing. Aktif mengelola media sosial komunitas seni di sekolah.</div>
-      </div>
-    </div>
-
-    <div class="student-card right" data-photo="">
-      <div class="photo-wrap">
-        <div class="photo-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="#7a6f63" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><circle cx="12" cy="17" r=".5" fill="#7a6f63"/></svg></div>
-      </div>
-      <div class="student-info">
-        <div class="jabatan">Bendahara</div>
-        <div class="nama"><a href="https://instagram.com" target="_blank">Cantika Maharani</a></div>
-        <div class="deskripsi">Passionate di bidang fashion design dan textile pattern. Sering memenangkan lomba desain tingkat kota.</div>
-      </div>
-    </div>
-
-    <div class="student-card left" data-photo="">
-      <div class="photo-wrap">
-        <div class="photo-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="#7a6f63" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><circle cx="12" cy="17" r=".5" fill="#7a6f63"/></svg></div>
-      </div>
-      <div class="student-info">
-        <div class="jabatan">Anggota</div>
-        <div class="nama"><a href="https://instagram.com" target="_blank">Yoga Pratama</a></div>
-        <div class="deskripsi">Kreator konten digital yang gemar membuat video kreatif. Menginspirasi teman-temannya lewat karya visual yang unik.</div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- ── FOOTER ── -->
-<footer>
-  Blog Kelas · <span>X DKV 1 &amp; X DKV 2</span> · Desain Komunikasi Visual
-</footer>
-
-<script>
-  // ── Scroll reveal ──
-  const cards = document.querySelectorAll('.student-card');
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('visible');
-        io.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.15 });
-  cards.forEach(c => io.observe(c));
-
-  // ── Nav active state on scroll ──
-  const sections = document.querySelectorAll('section[id]');
-  const navLinks = document.querySelectorAll('nav a');
-  window.addEventListener('scroll', () => {
-    let current = '';
-    sections.forEach(s => {
-      if (window.scrollY >= s.offsetTop - 100) current = s.id;
-    });
-    navLinks.forEach(a => {
-      a.classList.toggle('active', a.getAttribute('href') === '#' + current);
-    });
-  });
-
-  // ── Load real photos if data-photo set ──
-  document.querySelectorAll('.student-card[data-photo]').forEach(card => {
-    const url = card.dataset.photo;
-    const wrap = card.querySelector('.photo-wrap');
-    if (url) {
-      const img = document.createElement('img');
-      img.src = url;
-      img.alt = 'Foto siswa';
-      wrap.innerHTML = '';
-      wrap.appendChild(img);
-    }
-  });
-</script>
+        linkMenus.forEach(function(link) {
+            link.addEventListener('click', function() {
+                daftarMenu.classList.remove('muncul');
+            });
+        });
+    </script>
 </body>
-  </html>
-  
+                                                                                                                 </html>
