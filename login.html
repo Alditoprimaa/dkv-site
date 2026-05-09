@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Portal - DKV</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        }
+
+        .login-box {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            width: 380px;
+            text-align: center;
+        }
+
+        h2 { color: #333; margin-bottom: 8px; }
+        p { color: #666; font-size: 14px; margin-bottom: 30px; }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 10px 5px;
+            font-size: 16px;
+            border: none;
+            border-bottom: 2px solid #ccc;
+            outline: none;
+            background: transparent;
+            transition: 0.3s;
+        }
+
+        .input-group label {
+            position: absolute;
+            top: 10px;
+            left: 5px;
+            color: #999;
+            pointer-events: none;
+            transition: 0.3s;
+        }
+
+        .input-group input:focus ~ label,
+        .input-group input:valid ~ label {
+            top: -15px;
+            font-size: 12px;
+            color: #1e3c72;
+            font-weight: bold;
+        }
+
+        .input-group input:focus {
+            border-bottom: 2px solid #1e3c72;
+        }
+
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        button {
+            padding: 12px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.3s;
+            font-size: 15px;
+        }
+
+        .btn-main {
+            background: #1e3c72;
+            color: white;
+        }
+
+        .btn-main:hover {
+            background: #2a5298;
+            transform: scale(1.02);
+        }
+
+        .btn-sub {
+            background: transparent;
+            color: #1e3c72;
+            border: 2px solid #1e3c72;
+        }
+
+        .btn-sub:hover {
+            background: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-box">
+        <h2>Welcome</h2>
+        <p>Akses Database Siswa DKV</p>
+        
+        <div class="input-group">
+            <input type="email" id="email" required>
+            <label>Email</label>
+        </div>
+        
+        <div class="input-group">
+            <input type="password" id="password" required>
+            <label>Password</label>
+        </div>
+        
+        <div class="button-group">
+            <button id="btnLogin" class="btn-main">Masuk</button>
+            <button id="btnRegister" class="btn-sub">Daftar Akun</button>
+            <button id="btnGuest" class="btn-sub" style="margin-top: 5px; border-style: dashed;">Masuk sebagai Tamu</button>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInAnonymously } 
+        from "https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js";
+
+        // Konfigurasi Firebase kamu
+        const firebaseConfig = {
+            apiKey: "AIzaSyCz-sIkcnwAP9ybbQJT6SchFc5f-KwQkVA",
+            authDomain: "indexipiems.firebaseapp.com",
+            projectId: "indexipiems",
+            storageBucket: "indexipiems.firebasestorage.app",
+            messagingSenderId: "71265635437",
+            appId: "1:71265635437:web:0924961418ab9e64c38364",
+            measurementId: "G-LHR34VV83H"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        document.getElementById('btnLogin').addEventListener('click', () => {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            signInWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+                    if (user.email.endsWith("@smkipiems.sch.id")) {
+                        alert("Selamat Datang, Siswa DKV!");
+                        window.location.href = "webdkvindex.html"; 
+                    } else {
+                        alert("Selamat Datang, Pengunjung!");
+                        window.location.href = "webdkvindex.html";
+                    }
+                })
+                .catch((err) => {
+                    alert("Gagal Masuk: " + err.message);
+                });
+        });
+
+        document.getElementById('btnRegister').addEventListener('click', () => {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            createUserWithEmailAndPassword(auth, email, password)
+                .then(() => alert("Akun Berhasil Dibuat! Silakan klik Masuk."))
+                .catch((err) => alert("Gagal Daftar: " + err.message));
+        });
+
+        document.getElementById('btnGuest').addEventListener('click', () => {
+            signInAnonymously(auth)
+                .then(() => {
+                    alert("Selamat Datang, Tamu!");
+                    window.location.href = "webdkvindex.html";
+                })
+                .catch((error) => {
+                    alert("Gagal masuk sebagai tamu: " + error.message);
+                });
+        });
+    </script>
+</body>
+</html>
