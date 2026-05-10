@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profil - DKV IPIEMS</title>
+    <style>
+        /* --- VARIABEL WARNA (Mengikuti halaman sebelumnya) --- */
+        :root {
+            --bg-color: #f8f9fa;
+            --text-color: #333;
+            --card-bg: #ffffff;
+            --accent: #ffaa00;
+            --header-bg: #1a1a1a;
+            --avatar-bg: #e9ecef;
+            --border-color: #ddd;
+            --input-bg: #fff;
+        }
+
+        .dark-mode {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --card-bg: #1e1e1e;
+            --header-bg: #000000;
+            --avatar-bg: #2a2a2a;
+            --border-color: #333;
+            --input-bg: #2a2a2a;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            transition: background-color 0.4s ease, color 0.4s ease;
+        }
+
+        /* --- HEADER --- */
+        header { background-color: var(--header-bg); color: #fff; padding: 1rem 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
+        .logo { display: flex; align-items: center; gap: 15px; text-decoration: none; color: var(--accent); font-weight: bold; font-size: 1.2rem;}
+        nav ul { list-style: none; display: flex; gap: 1.5rem; align-items: center; }
+        nav ul li a { color: #fff; text-decoration: none; transition: color 0.3s; font-weight: 500; }
+        nav ul li a:hover { color: var(--accent); }
+        #tombol-tema { background-color: #333; padding: 5px 12px; border-radius: 20px; font-size: 0.9rem; cursor: pointer;}
+        #tombol-tema:hover { background-color: #555; color: #fff; }
+
+        /* --- LAYOUT UTAMA --- */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem 5%;
+        }
+
+        /* --- BAGIAN BANNER & AVATAR (BEHANCE STYLE) --- */
+        .profile-header {
+            position: relative;
+            margin-bottom: 4rem;
+        }
+
+        .banner-container {
+            width: 100%;
+            height: 250px;
+            background-color: var(--avatar-bg);
+            background-image: url('https://via.placeholder.com/1200x400?text=Klik+untuk+Ubah+Banner');
+            background-size: cover;
+            background-position: center;
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .banner-container:hover::after {
+            content: '📷 Ubah Banner';
+            position: absolute;
+            background: rgba(0,0,0,0.6);
+            color: white;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        /* Avatar tumpang tindih dengan banner */
+        .avatar-container {
+            position: absolute;
+            bottom: -50px;
+            left: 40px;
+            display: flex;
+            align-items: flex-end;
+            gap: 20px;
+        }
+
+        .avatar {
+            width: 130px;
+            height: 130px;
+            background-color: var(--card-bg);
+            border-radius: 50%;
+            border: 5px solid var(--bg-color);
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23a0aab5"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>');
+            background-size: 80%;
+            background-repeat: no-repeat;
+            background-position: center bottom;
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+        }
+        .avatar:hover::after {
+            content: '📷';
+            position: absolute;
+            background: rgba(0,0,0,0.6);
+            color: white;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+
+        /* Tombol Aksi Kanan Atas (Simpan/Batal) */
+        .action-buttons {
+            position: absolute;
+            bottom: -50px;
+            right: 0;
+            display: flex;
+            gap: 10px;
+        }
+        .btn {
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 0.95rem;
+        }
+        .btn-cancel { background-color: transparent; border: 2px solid var(--border-color); color: var(--text-color); }
+        .btn-cancel:hover { background-color: var(--border-color); }
+        .btn-save { background-color: var(--accent); color: #000; }
+        .btn-save:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(255, 170, 0, 0.4); }
+
+        /* --- FORM INFORMASI BIO --- */
+        .edit-section {
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+        .form-group { margin-bottom: 1.5rem; }
+        .form-row { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+        .form-col { flex: 1; min-width: 250px; }
+        
+        label { display: block; font-weight: 600; margin-bottom: 8px; font-size: 0.95rem; color: var(--text-color); }
+        input, textarea, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background-color: var(--input-bg);
+            color: var(--text-color);
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        input:focus, textarea:focus, select:focus { border-color: var(--accent); }
+        textarea { resize: vertical; min-height: 100px; }
+
+        /* --- TABS (NAVIGASI BAWAH BEHANCE STYLE) --- */
+        .tabs {
+            display: flex;
+            gap: 2rem;
+            border-bottom: 2px solid var(--border-color);
+            margin-bottom: 2rem;
+        }
+        .tab {
+            padding: 10px 0;
+            font-weight: bold;
+            color: var(--text-color);
+            opacity: 0.6;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: 0.3s;
+        }
+        .tab.active { opacity: 1; border-bottom-color: var(--accent); color: var(--accent); }
+        .tab:hover { opacity: 1; }
+
+        /* --- GRID PROJECT / PORTOFOLIO --- */
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .project-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            height: 220px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            background-size: cover;
+            background-position: center;
+        }
+        .project-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            opacity: 0;
+            transition: 0.3s;
+        }
+        .project-card:hover .project-overlay { opacity: 1; }
+        .btn-edit-proj { background: var(--accent); color: #000; padding: 8px 15px; border-radius: 5px; text-decoration: none; font-weight: bold; font-size: 0.9rem; }
+        .btn-del-proj { background: #dc3545; color: #fff; padding: 8px 15px; border-radius: 5px; text-decoration: none; font-weight: bold; font-size: 0.9rem; border: none; cursor: pointer; }
+
+        /* Kotak Tambah Project Sesuai Sketsa */
+        .create-project {
+            border: 2px dashed var(--border-color);
+            border-radius: 10px;
+            height: 220px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-color);
+            opacity: 0.7;
+            cursor: pointer;
+            transition: 0.3s;
+            background-color: transparent;
+        }
+        .create-project:hover { opacity: 1; border-color: var(--accent); color: var(--accent); background-color: rgba(255, 170, 0, 0.05); }
+        .create-project .icon { font-size: 3rem; margin-bottom: 10px; }
+        .create-project span { font-weight: bold; font-size: 1.1rem; }
+
+        /* --- RESPONSIVE MOBILE --- */
+        @media (max-width: 768px) {
+            .banner-container { height: 180px; }
+            .avatar-container { left: 50%; transform: translateX(-50%); bottom: -65px; flex-direction: column; align-items: center; }
+            .avatar { width: 110px; height: 110px; }
+            .action-buttons { position: static; justify-content: center; margin-top: 80px; margin-bottom: 20px; }
+            .profile-header { margin-bottom: 1rem; }
+            .form-col { min-width: 100%; }
+            .tabs { overflow-x: auto; white-space: nowrap; padding-bottom: 5px; }
+            .project-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="data-siswa.html" class="logo">DKV IPIEMS</a>
+        <nav>
+            <ul>
+                <li><a href="data-siswa.html">Kembali</a></li>
+                <li><a href="#" id="tombol-tema">🌙 Gelap</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        
+        <section class="profile-header">
+            <div class="banner-container" title="Klik untuk mengubah banner">
+                </div>
+            
+            <div class="avatar-container">
+                <div class="avatar" title="Klik untuk mengubah foto profil"></div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn btn-cancel">Batal</button>
+                <button class="btn btn-save" onclick="alert('Data berhasil disimpan!')">Simpan Perubahan</button>
+            </div>
+        </section>
+
+        <section class="edit-section">
+            <div class="form-row">
+                <div class="form-col form-group">
+                    <label>Nama Lengkap</label>
+                    <input type="text" value="Didin" placeholder="Masukkan nama...">
+                </div>
+                <div class="form-col form-group">
+                    <label>Kelas</label>
+                    <select>
+                        <option value="X-DKV1">X-DKV1</option>
+                        <option value="X-DKV2" selected>X-DKV2</option>
+                        <option value="XI-DKV">XI-DKV</option>
+                        <option value="XII-DKV">XII-DKV</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Minat Keahlian & Software (Pisahkan dengan koma)</label>
+                <input type="text" value="Web Design, HTML/CSS Coding, VS Code, Figma" placeholder="Contoh: Ilustrasi, Adobe Illustrator...">
+            </div>
+
+            <div class="form-group">
+                <label>Bio / Tentang Saya</label>
+                <textarea placeholder="Ceritakan sedikit tentang dirimu...">Siswa DKV yang bersemangat mengeksplorasi pembuatan website interaktif dan desain UI/UX yang modern. Selalu siap menerima tantangan baru dalam dunia digital!</textarea>
+            </div>
+
+            <div class="form-row">
+                <div class="form-col form-group">
+                    <label>Link Instagram</label>
+                    <input type="url" placeholder="https://instagram.com/username">
+                </div>
+                <div class="form-col form-group">
+                    <label>Nomor WhatsApp</label>
+                    <input type="tel" placeholder="08123456789">
+                </div>
+            </div>
+        </section>
+
+        <div class="tabs">
+            <div class="tab active">Portofolio & Proyek</div>
+            <div class="tab">Draft</div>
+            <div class="tab">Pengaturan Akun</div>
+        </div>
+
+        <section class="project-grid">
+            
+            <div class="create-project" onclick="alert('Membuka pop-up upload proyek baru...')">
+                <div class="icon">⊕</div>
+                <span>Create Project</span>
+            </div>
+
+            <div class="project-card" style="background-image: url('https://via.placeholder.com/600x400?text=Proyek+Website+Pertama');">
+                <div class="project-overlay">
+                    <a href="#" class="btn-edit-proj">Edit</a>
+                    <button class="btn-del-proj">Hapus</button>
+                </div>
+            </div>
+
+            <div class="project-card" style="background-image: url('https://via.placeholder.com/600x400?text=Desain+Aplikasi+Mobile');">
+                <div class="project-overlay">
+                    <a href="#" class="btn-edit-proj">Edit</a>
+                    <button class="btn-del-proj">Hapus</button>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <script>
+        // FITUR DARK MODE (Menjaga konsistensi antar halaman)
+        const tombolTema = document.getElementById('tombol-tema');
+        const body = document.body;
+
+        // Cek preferensi tema sebelumnya di LocalStorage
+        if (localStorage.getItem('tema') === 'dark') {
+            body.classList.add('dark-mode');
+            tombolTema.innerText = '☀️ Terang';
+        }
+
+        tombolTema.addEventListener('click', function(e) {
+            e.preventDefault(); 
+            body.classList.toggle('dark-mode');
+            if (body.classList.contains('dark-mode')) {
+                tombolTema.innerText = '☀️ Terang';
+                localStorage.setItem('tema', 'dark'); 
+            } else {
+                tombolTema.innerText = '🌙 Gelap';
+                localStorage.setItem('tema', 'light');
+            }
+        });
+    </script>
+</body>
+</html>
