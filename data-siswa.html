@@ -88,8 +88,39 @@
             cursor: pointer;
         }
         .siswa-card:hover { transform: translateY(-8px); box-shadow: 0 10px 20px rgba(255, 170, 0, 0.15); border: 1px solid var(--accent); }
-        .foto-profil { width: 100%; padding-top: 100%; background-color: var(--avatar-bg); border-radius: 8px; margin-bottom: 1.2rem; position: relative; overflow: hidden; }
-        .foto-profil::after { content: ''; position: absolute; bottom: -5px; left: 50%; transform: translateX(-50%); width: 65%; height: 75%; background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23a0aab5"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>'); background-size: contain; background-repeat: no-repeat; background-position: bottom; }
+        .foto-profil { 
+            width: 100%; 
+            padding-top: 100%; /* Membuat kotak presisi 1:1 (persegi) */
+            background-color: var(--avatar-bg); 
+            border-radius: 24px; 
+            margin-bottom: 1.2rem; 
+            position: relative; 
+            overflow: hidden;}
+
+        .foto-profil img {
+          position: absolute;
+            top: 50%;                  /* Geser titik atas foto ke tengah kotak */
+            left: 50%;                 /* Geser titik kiri foto ke tengah kotak */
+            transform: translate(-50%, -50%); /* Tarik foto kembali agar pas di titik pusat */
+            width: 100%;
+            height: 100%;
+            object-fit: cover;         /* Memotong foto secara proporsional */
+            object-position: center;   /* Memastikan fokus pemotongan di tengah wajah */
+            z-index: 2;                
+            border-radius: 24px;       /* Pastikan nilai melengkungnya sama dengan .foto-profil */
+        }
+        .foto-profil::after { content: ''; 
+            position: absolute; 
+            bottom: -5px; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            width: 65%; 
+            height: 75%; 
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23a0aab5"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>'); 
+            background-size: contain; 
+            background-repeat: no-repeat; 
+            background-position: bottom; 
+            z-index: 1;                /* Di bawah foto asli */}
         .nama-siswa { font-size: 1.1rem; font-weight: 700; color: var(--text-color); margin-bottom: 0.3rem; text-transform: uppercase; }
         .kelas-siswa { font-size: 0.9rem; color: var(--accent); font-weight: 600; }
 
@@ -152,7 +183,7 @@
             position: relative; overflow: hidden;
             border: 4px solid var(--bg-color);
         }
-        .modal-avatar::after { content: ''; position: absolute; bottom: -5px; left: 50%; transform: translateX(-50%); width: 70%; height: 80%; background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23a0aab5"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>'); background-size: contain; background-repeat: no-repeat; background-position: bottom; }
+        .modal-avatar::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; height: 100%; background-image: url('aset/DSC_1700 copy.jpg'); background-size: cover; background-repeat: center; background-position: no-repeat; }
         
         #modal-nama { font-size: 1.8rem; font-weight: bold; margin-bottom: 5px; color: var(--text-color); }
         #modal-kelas { color: var(--accent); font-weight: bold; margin-bottom: 2rem; font-size: 1.1rem; }
@@ -232,20 +263,20 @@
 <body>
 
     <header>
-        <a href="webdkvindex.html" class="logo">
-            <img src="logoipiems-removebg-preview (1).png" alt="Logo SMK IPIEMS" class="logo-img">
+        <a href="index.html" class="logo">
+            <img src="aset/ipiems.png" alt="Logo SMK IPIEMS" class="logo-img">
             DKV IPIEMS
         </a>
         <nav>
             <ul>
-                <li><a href="webdkvindex.html">Beranda</a></li>
+                <li><a href="index.html">Beranda</a></li>
                 <li><a href="#" id="tombol-tema">🌙 Gelap</a></li>
                 
                 <li class="user-menu-container" id="user-menu-toggle">
                     <div class="user-avatar-nav" title="Menu Akun"></div>
                     <div class="dropdown-menu" id="profile-dropdown">
                         <div class="menu-header">
-                            <strong>Didin</strong><br>
+                            <strong>Devinta Adelia Raemawati</strong><br>
                             <small>Siswa DKV</small>
                         </div>
                         <a href="edit-profil.html">⚙️ Edit Profil Saya</a>
@@ -273,21 +304,23 @@
         <div class="siswa-grid" id="grid-siswa">
             
             <div class="siswa-card">
-                <div class="foto-profil"></div>
-                <div class="nama-siswa">Didin</div>
-                <div class="kelas-siswa">X-DKV2</div>
+                <div class="foto-profil">
+                    <img src="aset/DSC_1700 copy.jpg" alt="Foto Devinta Adelia">
+                </div>
+                <div class="nama-siswa">Devinta Adelia Raemawati</div>
+                <div class="kelas-siswa">XI-DKV 1</div>
             </div>
 
             <div class="siswa-card">
                 <div class="foto-profil"></div>
-                <div class="nama-siswa">Mas Nuh</div>
-                <div class="kelas-siswa">X-DKV1</div>
+                <div class="nama-siswa">Yonatan Sebastian Nugroho</div>
+                <div class="kelas-siswa">XI-DKV 1</div>
             </div>
 
             <div class="siswa-card">
                 <div class="foto-profil"></div>
-                <div class="nama-siswa">Kecubung</div>
-                <div class="kelas-siswa">X-DKV1</div>
+                <div class="nama-siswa">Muhammad Hisyam Habibie</div>
+                <div class="kelas-siswa">XI-DKV 1</div>
             </div>
 
             <div id="pesan-kosong">Yah, nama siswanya nggak ketemu...</div>
@@ -326,7 +359,7 @@
                 </div>
 
                 <div class="section-karya">
-                    <h3>Portofolio Anak DKV</h3>
+                    <h3>Portofolio</h3>
                     <div class="portofolio-grid">
                         <div class="karya-item" style="background-image: url('https://via.placeholder.com/1000x500?text=Proyek+Website+Pertama');"></div>
                         <div class="karya-item" style="background-image: url('https://via.placeholder.com/1000x500?text=Desain+Aplikasi+Mobile');"></div>
